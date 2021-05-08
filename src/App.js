@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import { gql, useQuery } from "@apollo/client";
+
+const GET_MENU_ITEMS = gql` {
+    menuItems {
+        edges {
+            node {
+                id
+                label
+                path
+            }
+        }
+    }
+}`;
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const { loading, error, data } = useQuery( GET_MENU_ITEMS );
+
+    if ( loading ) return <h1>Loading...</h1>
+
+    if ( error ) {
+        console.error( error );
+        return <h2>See console</h2>;
+    }
+
+    console.log( data );
+
+    return (
+        <div className="App">
+            <h1>Hello!!!</h1>
+            <nav>
+                <ul>
+                    { data.menuItems.edges.map( item => (
+                        <li key={ item.node.id }>
+                            <a href={ item.node.path }>{ item.node.label }</a>
+                        </li>
+                    ) ) }
+                </ul>
+            </nav>
+        </div>
+    );
 }
 
 export default App;
