@@ -8,7 +8,7 @@ const MenuItem = ({ item, hasChildren, children }) => {
     ].join(' ');
 
     return (
-        <li className={classes}>
+        <li className={classes} id={`menu-item-${item.databaseId}`}>
             <NavLink
                 to={item.path}
                 exact
