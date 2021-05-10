@@ -1,12 +1,9 @@
-import { Switch, Route, useParams } from "react-router";
+import { Switch, Route } from "react-router-dom";
 import Menu from "./Menu/Menu";
 import './App.scss';
+import Archive from "./Archive/Archive";
+import SingleProduct from "./SingleProduct/SingleProduct";
 
-const Category = () => {
-    console.log(useParams());
-    const { prod_cat } = useParams();
-    return <h1>Category: { prod_cat }</h1>
-}
 
 function App() {
     return (
@@ -20,14 +17,14 @@ function App() {
                     <Route exact path="/">
                         <h1>Home</h1>
                     </Route>
-                    <Route path="/shop">
-                        <h1>Shop</h1>
+                    <Route path={ ["/shop", "/product-category/:prod_cat"] }>
+                        <Archive/>
                     </Route>
                     <Route path="/my-account">
                         <h1>My account</h1>
                     </Route>
-                    <Route path="/product-category/:prod_cat">
-                        <Category />
+                    <Route path="/product/:slug">
+                        <SingleProduct/>
                     </Route>
                     <Route>
                         <h1>404</h1>
